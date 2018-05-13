@@ -4,7 +4,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +23,8 @@ public class StringRedisUtil {
      * @param key key
      * @param value value
      *
-     * GET key	获取指定键的值。
+     *  SET key value	此命令设置指定键的值。
+     *
      */
     public void setStrValue(String key, String value) {
         stringRedisTemplate.opsForValue().set(key, value);
@@ -33,14 +33,14 @@ public class StringRedisUtil {
      * 获取String类型的Key值和String类型的Value
      * @param key key
      *
-     * SET key value	此命令设置指定键的值。
+     * GET key	获取指定键的值。
      */
     public String getStrValue(String key) {
         return stringRedisTemplate.opsForValue().get(key);
     }
 
     /**
-     * 获取存储在键上的字符串的子字符串
+     * 获取存储在键上的字符串的子字符串 字符串区分大小写
      * @param key key
      * @param start 起始索引
      * @param end 结束索引
@@ -113,13 +113,13 @@ public class StringRedisUtil {
     }
 
     /**
-     * 为多个键设置它们的值,返回设置的值的集合
-     * @param keys 键的集合
+     * 为多个键设置它们的值
+     * @param map 键值的集合
      *
      * MSET key value [key value …]
      */
-    public Collection<String> multiGet(Collection<String> keys){
-        return stringRedisTemplate.opsForValue().multiGet(keys);
+    public void multiSet(Map<String, String> map){
+         stringRedisTemplate.opsForValue().multiSet(map);
     }
 
     /**

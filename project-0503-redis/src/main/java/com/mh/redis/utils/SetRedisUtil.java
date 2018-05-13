@@ -3,6 +3,7 @@ package com.mh.redis.utils;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -13,17 +14,18 @@ import java.util.Set;
  * @author 孟浩
  * @date 2018/5/3  16:30.
  */
+@Component
 public class SetRedisUtil {
 
     @Resource
     private RedisTemplate redisTemplate;
 
     /**
-     * 将一个或多个成员添加到集合,返回集合size
+     * 将一个或多个成员添加到集合,
      *
      * @param key key
      * @param value value
-     * @return 集合size
+     * @return 添加元素的数量
      *
      * SADD key member1 [member2]
      */
@@ -46,7 +48,7 @@ public class SetRedisUtil {
     }
 
     /**
-     * 移除并且返回被移除的元素
+     * 移除随机元素并且返回被移除的元素
      *
      * @param key key
      * @return 被移除元素

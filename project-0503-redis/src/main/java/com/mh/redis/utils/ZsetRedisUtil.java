@@ -4,6 +4,7 @@ import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -13,7 +14,8 @@ import java.util.Set;
  * @author 孟浩
  * @date 2018/5/3  16:30.
  */
-public class ZsetRedisUtil {
+@Component
+public class ZSetRedisUtil {
 
 
 
@@ -22,20 +24,24 @@ public class ZsetRedisUtil {
 
 
     /**
-     * 新增一个有序集合，存在的话为false，不存在的话为true
-     * TODO 需要测试与下一个方法比较
+     * 新增一个有序集合
+     * 如何value 已存在,返回false,同时更新score
+     * 如果value 不存在,返回true,添加成功
      *
-     * @param key
-     * @param value
-     * @param score
-     * @return
+     * @param key key
+     * @param value value
+     * @param score score
+     * @return boolean
+     *
+     * ZADD key score1 member1 [score2 member2]
      */
     public Boolean add(String key,Object value, double score){
         return redisTemplate.opsForZSet().add(key, value, score);
     }
 
     /**
-     * 新增一个有序集合 返回集合size
+     * 新增一个有序集合 返回添加的成员的数量
+     * 如果添加 成员已存在,更新分数 返回0
      *
      * @param key key
      * @param tuples value 和 score的set集合
@@ -78,7 +84,7 @@ public class ZsetRedisUtil {
 
 
     /**
-     * 返回有序集中指定成员的索引 其中有序集成员按分数值递减(从小到大)顺序排列
+     * 返回有序集中指定成员的索引 其中有序集成员按分数值递增(从小到大)顺序排列
      *
      * @param key key
      * @param o 指定元素
@@ -193,7 +199,7 @@ public class ZsetRedisUtil {
     }
 
     /**
-     * 通过索引区间返回有序集合成指定区间内的成员，其中有序集成员按分数值递增(从大到小)顺序排列
+     * 通过索引区间返回有序集合成指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列
      *
      * @param key key
      * @param start 起始索引
@@ -208,7 +214,7 @@ public class ZsetRedisUtil {
 
 
     /**
-     * 通过索引区间返回有序集合成指定区间内的成员和分数集合，其中有序集成员按分数值递增(从大到小)顺序排列
+     * 通过索引区间返回有序集合成指定区间内的成员和分数集合，其中有序集成员按分数值递减(从大到小)顺序排列
      *
      * @param key key
      * @param start 起始索引
@@ -222,7 +228,7 @@ public class ZsetRedisUtil {
     }
 
     /**
-     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递增(从大到小)顺序排列
+     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列
      *
      * @param key key
      * @param min 最小分数
@@ -237,7 +243,7 @@ public class ZsetRedisUtil {
 
 
     /**
-     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递增(从大到小)顺序排列
+     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列
      *
      * @param key key
      * @param min 最小分数
@@ -251,7 +257,7 @@ public class ZsetRedisUtil {
     }
 
     /**
-     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递增(从大到小)顺序排列 可以分页 首页0
+     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列 可以分页 首页0
      *
      * @param key key
      * @param min 最小分数
@@ -266,7 +272,7 @@ public class ZsetRedisUtil {
 
 
     /**
-     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递增(从大到小)顺序排列 可以分页 首页0
+     * 通过分数返回有序集合指定区间内的成员，其中有序集成员按分数值递减(从大到小)顺序排列 可以分页 首页0
      *
      * @param key key
      * @param min 最小分数
@@ -367,7 +373,7 @@ public class ZsetRedisUtil {
 
     /**
      * 计算给定的一个有序集的交集，并存储在新的 destKey中，key相同的话会把score值相加
-     * 返回destKey 对应set集合size
+     * 返回destKey 对应zset集合size
      *
      * @param key key
      * @param otherKeys otherKeys

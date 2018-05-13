@@ -1,6 +1,7 @@
 package com.mh.redis.utils;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author 孟浩
  * @date 2018/5/3  16:29.
  */
+@Component
 public class ListRedisUtil {
 
     @Resource

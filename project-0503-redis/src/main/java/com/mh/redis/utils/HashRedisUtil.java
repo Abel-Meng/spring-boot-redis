@@ -1,6 +1,7 @@
 package com.mh.redis.utils;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -12,10 +13,12 @@ import java.util.Set;
  * @author 孟浩
  * @date 2018/5/3  16:29.
  */
+@Component
 public class HashRedisUtil {
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+
 
     /**
      * 删除一个或多个hash字段
@@ -27,8 +30,8 @@ public class HashRedisUtil {
      *
      * HDEL key field2 [field2]
      */
-    public Long delete(String key,Object... hashKeys){
-        return redisTemplate.opsForHash().delete(key, hashKeys);
+    public Long delete(String key, Object... hashKeys){
+        return redisTemplate.opsForHash().delete(key,hashKeys);
     }
 
     /**
@@ -53,7 +56,7 @@ public class HashRedisUtil {
      *
      * HGET key field
      */
-    public Object get(String key,Object hashKey){
+    public Object get(String key,String hashKey){
         return redisTemplate.opsForHash().get(key, hashKey);
     }
 
@@ -140,7 +143,7 @@ public class HashRedisUtil {
      */
     public void putAll(String key, Map<? extends  Object,? extends Object> m){
         redisTemplate.opsForHash().putAll(key, m);
-    }
+    };
 
     /**
      * 指定哈希字段的值
@@ -157,7 +160,7 @@ public class HashRedisUtil {
 
     /**
      * 仅当字段不存在时，才设置哈希字段的值
-     * 如果不存在,不操作
+     * 如果存在,不操作
      *
      * @param key key
      * @param hashKey 哈希字段

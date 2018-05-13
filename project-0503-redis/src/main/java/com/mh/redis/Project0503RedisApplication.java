@@ -9,4 +9,6 @@ public class Project0503RedisApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Project0503RedisApplication.class, args);
 	}
+
+
 }
