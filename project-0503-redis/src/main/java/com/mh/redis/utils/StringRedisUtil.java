@@ -91,6 +91,8 @@ public class StringRedisUtil {
 
     /**
      * 设置键的值，仅当键不存在时;如果键已存在,则不做任何操作
+     * 如果已存在,返回false,如果不存在,返回true.
+     *
      * @param key key
      * @param value value
      * @return value

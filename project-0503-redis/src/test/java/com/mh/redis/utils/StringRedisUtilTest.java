@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class StringRedisUtilTest {
 
     @Autowired
     private StringRedisUtil stringRedisUtil;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Test
     @Ignore("not ready yet")
@@ -80,8 +84,8 @@ public class StringRedisUtilTest {
     @Test
     @Ignore("not ready yet")
     public void setIfAbsent() {
-        stringRedisUtil.setIfAbsent(key2,"name");
-        stringRedisUtil.setIfAbsent(key1,"name");
+        System.out.println(stringRedisUtil.setIfAbsent(key1,"name"));
+        System.out.println(stringRedisUtil.setIfAbsent(key1,"age"));
     }
 
     @Test
